@@ -9,18 +9,20 @@ def run_full_agentic_flow(ticket_id: str):
     
     # Step 1 – Get ticket
     # If you're  using real JIRA connector yet use this:
-    # jira_text = get_ticket_context(ticket_id)
-
+    jira_text = get_ticket_context(ticket_id)
+    print("Step 1 : jira_text: ", jira_text)
     # If you're not using real JIRA connector yet, modify orchestrator temporarily:
-    jira_text = "Fix memory leak issue in observer pattern implementation"
+    # jira_text = "Fix memory leak issue in observer pattern implementation"
 
     # Step 2 – Analyze impact
     impacted = analyze_ticket(jira_text)
+    print("Step 2 : impacted: ", impacted)
 
     # Step 3 – Propose changes
     proposals = propose_changes(jira_text, impacted)
+    print("Step 3 : proposals: ", proposals)
 
     # Step 4 – Commit changes
     result = commit_proposed_changes(REPO_PATH, proposals)
-
+    print("Step 4 : result: ", result.values)
     return result
