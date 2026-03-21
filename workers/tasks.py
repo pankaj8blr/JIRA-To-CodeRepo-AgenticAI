@@ -1,3 +1,4 @@
+import os
 from celery import Celery
 from workers.indexer import index_file
 
@@ -14,3 +15,16 @@ def index_repo_task(self, repo_path):
         for file in files:
             if file.endswith(".java"):
                 index_file(os.path.join(root, file))
+
+
+
+REPO_PATH = "/app/java_repo"
+
+
+@app.task
+def incremental_index_task(files):
+    for file in files:
+        full_path = os.path.join(REPO_PATH, file)
+
+        if os.path.exists(full_path):
+            index_file(full_path)

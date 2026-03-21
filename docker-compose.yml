@@ -31,6 +31,18 @@ services:
     volumes:
       - prometheus_data:/prometheus
 
+  webhook:
+    build: .
+    command: python services/github_webhook.py
+    ports:
+      - "5001:5000"
+    env_file:
+      - .env
+    environment:
+    - PYTHONPATH=/app   # ✅ ADD THIS
+    depends_on:
+      - worker
+
 
 volumes:
   qdrant_data:
